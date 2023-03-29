@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>VRP Problem</h1>
+      <canvas id="my-canvas" width="800" height="400"></canvas>
+      <section>
+        <h3>New Location</h3>
+        <form action="">
+          <div class="add-location">
+            <div class="field">
+              <label for="x-coordinate">X-Coordinate</label>
+              <input
+                min="0"
+                max="40"
+                step="1"
+                type="number"
+                id="x-coordinate"
+              />
+            </div>
+            <div class="field">
+              <label for="y-coordinate">Y-Coordinate</label>
+              <input
+                min="0"
+                max="20"
+                step="1"
+                type="number"
+                id="y-coordinate"
+              />
+            </div>
+          </div>
+          <div class="submit">
+            <button type="submit">Add Location</button>
+          </div>
+          <hr />
+        </form>
+        <h3>Locations</h3>
+        <ul class="locations"></ul>
+        <h3>Solve</h3>
+        <div class="field">
+          <label for="vehicles">Vehicles</label>
+          <input min="1" step="1" type="number" id="vehicles" />
+        </div>
+        <div class="solutions">
+          <button>Solve using <strong>GA</strong></button>
+          <button>Solve using <strong>DFS</strong></button>
+        </div>
+      </section>
+    </div>
+    <script src="Location.js"></script>
+    <script src="Chromosome.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,145 @@
+:root {
+  --main-color: #0e8388;
+  --second-color: #2e4f4f;
+  --third-color: #2c3333;
+  --forth-color: #cbe4de;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  margin: 0 auto !important;
+  width: fit-content;
+}
+
+.container h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin: 30px;
+  color: var(--main-color);
+}
+
+.container #my-canvas {
+  border: 1px solid;
+  box-shadow: 0 2px 10px rgba(170, 170, 170, 0.8);
+}
+
+.container section {
+  border-radius: 5px;
+  padding: 10px;
+  width: fit-content;
+  margin: 20px auto;
+  background-color: #e5eeec;
+  box-shadow: 0 2px 10px rgba(170, 170, 170, 0.8);
+}
+
+.container section h3 {
+  text-align: center;
+  margin: 15px;
+  color: var(--main-color);
+}
+
+.container section form .add-location {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.container section form .add-location > * {
+  flex: 1;
+}
+
+.container section .field > * {
+  display: block;
+  outline: none;
+  padding: 5px;
+  min-width: 200px;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.container section form .field input {
+  transition: 0.2s;
+  border: 1px solid var(--main-color);
+}
+
+.container section .field > * {
+  margin-top: 0;
+  width: 100%;
+}
+
+.container section form .submit {
+  text-align: right;
+}
+
+hr {
+  width: 80%;
+  margin: 10px auto;
+}
+
+.container section .locations {
+  max-height: 200px;
+  list-style: none;
+  font-size: 1.2rem;
+  overflow: auto;
+}
+
+.container section .locations .location {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 5px 0;
+  border: 1px solid var(--second-color);
+  border-radius: 5px;
+}
+
+.container section .locations .location button {
+  padding: 5px 10px;
+  background-color: rgb(236, 44, 44);
+  transition: 0.1s;
+}
+
+.container section .locations .location button:hover {
+  background-color: rgb(211, 47, 47);
+}
+
+.container section .locations .location li {
+  color: var(--main-color);
+  letter-spacing: 2px;
+  margin: 2px;
+}
+
+.container section .solutions {
+  text-align: center;
+}
+
+.container section .solutions button {
+  margin: 20px 0;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  background-color: var(--main-color);
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: var(--second-color);
+}
+
+button:active {
+  background-color: var(--third-color);
+}
