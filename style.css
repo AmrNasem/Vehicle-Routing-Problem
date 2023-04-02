@@ -100,8 +100,27 @@ hr {
   margin: 5px 0;
   border: 1px solid var(--second-color);
   border-radius: 5px;
+  transition: 0.2s;
 }
 
+.container section .locations .location:not(.depot):hover {
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.depot {
+  background-color: var(--third-color);
+}
+
+.container section .locations .location li {
+  color: var(--main-color);
+  letter-spacing: 2px;
+  margin: 2px;
+}
+.container section .locations .location span {
+  color: white;
+  font-size: 1rem;
+}
 .container section .locations .location button {
   padding: 5px 10px;
   background-color: rgb(236, 44, 44);
@@ -110,12 +129,6 @@ hr {
 
 .container section .locations .location button:hover {
   background-color: rgb(211, 47, 47);
-}
-
-.container section .locations .location li {
-  color: var(--main-color);
-  letter-spacing: 2px;
-  margin: 2px;
 }
 
 .container section .solutions {
