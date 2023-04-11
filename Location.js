@@ -4,10 +4,9 @@ class Location {
     this.x = x;
     this.y = y;
     this.depot = depot;
-    this.domElement = null;
   }
 
-  createLocation(ctx) {
+  createLocation() {
     // Canvas Location
     let radius = this.depot ? 7 : 5;
 
@@ -24,9 +23,10 @@ class Location {
       ? location.classList.add("depot")
       : location.classList.remove("depot");
 
-    location.setAttribute("data-x", this.x);
-    location.setAttribute("data-y", this.y);
-    location.setAttribute("data-id", this.id);
+    location.setAttribute("id", this.id);
+
+    location.addEventListener("click", setDepot);
+    location.addEventListener("click", removeLocation);
 
     const li = document.createElement("li");
     li.innerHTML = `(${this.x}, ${this.y})`;
@@ -38,7 +38,6 @@ class Location {
     button.innerHTML = "Delete";
 
     location.append(li, span, button);
-    this.domElement = location;
 
     return location;
   }

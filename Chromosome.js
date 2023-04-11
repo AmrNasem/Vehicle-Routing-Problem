@@ -7,6 +7,13 @@ class Chromosome {
     if (createGenes) this.createGenes();
   }
 
+  createGenes() {
+    for (let i = 0; i < this.length; i++) {
+      const randomLocation = Math.floor(Math.random() * this.length);
+      this.genes.push(locations[randomLocation].id);
+    }
+  }
+
   crossover(chromosome) {
     const pos = Math.floor(Math.random() * this.length);
     let child1 = new Chromosome(this.length, false);
@@ -22,11 +29,6 @@ class Chromosome {
       }
     }
     return { child1, child2 };
-  }
-
-  createGenes() {
-    for (let i = 0; i < this.length; i++)
-      this.genes.push(Math.floor(Math.random() * 10));
   }
 
   mutate() {

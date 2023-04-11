@@ -15,9 +15,7 @@ const reset = () => {
       location.depot = true;
       init = false;
     }
-    locationElements.prepend(location.createLocation(ctx));
-    location.domElement.addEventListener("click", setDepot);
-    location.domElement.addEventListener("click", removeLocation);
+    locationElements.prepend(location.createLocation());
   });
 };
 
@@ -36,25 +34,22 @@ const setDepot = (e) => {
   if (e.target.classList.contains("location")) {
     locations.forEach((location) => (location.depot = false));
 
-    locations.find(
-      (location) => location.id === e.target.dataset.id
-    ).depot = true;
+    locations.find((location) => location.id === e.target.id).depot = true;
     reset();
   }
 };
 
 // Add Location
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
   if (x.value === "" || y.value === "") return;
 
-  for (let i = 0; i < locations.length; i++) {
+  for (let i = 0; i < locations.length; i++)
     if (locations[i].x === x.value && locations[i].y === y.value) return;
-  }
+
   const location = new Location(x.value, y.value);
+  locationElements.prepend(location.createLocation());
   locations.push(location);
-  location.createLocation(ctx);
-  reset();
 
   x.value = y.value = "";
   x.focus();
@@ -64,7 +59,7 @@ form.addEventListener("submit", (event) => {
 const removeLocation = (e) => {
   if (e.target.tagName === "BUTTON") {
     locations = locations.filter((location) => {
-      if (location.id !== e.target.parentElement.dataset.id) {
+      if (location.id !== e.target.parentElement.id) {
         return true;
       }
       if (location.depot) init = true;
@@ -83,9 +78,18 @@ for (let i = 0; i < 15; i++) {
     init
   );
   init = false;
-  location.createLocation(ctx);
+  const existing = locations.find(
+    (eLocation) => eLocation.x === location.x && eLocation.y === location.y
+  );
+
+  // Remove unnecessary duplicates
+  if (existing) {
+    i--;
+    continue;
+  }
+  locationElements.prepend(location.createLocation());
   locations.push(location);
 }
 
-// Reset Canvas
-reset();
+const ga = new GA();
+ga.go();
