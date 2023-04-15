@@ -26,6 +26,7 @@ const y = document.getElementById("y-coordinate");
 const locationElements = document.querySelector(
   ".container section .locations"
 );
+const solve = document.querySelector(".solutions button");
 
 let locations = [];
 
@@ -69,9 +70,9 @@ const removeLocation = (e) => {
   }
 };
 
-// Generate Locations
+// Generate Locations (Temporary for testing)
 let init = true;
-for (let i = 0; i < 15; i++) {
+for (let i = 0; i < 30; i++) {
   const location = new Location(
     Math.floor(Math.random() * 40),
     Math.floor(Math.random() * 20),
@@ -91,5 +92,19 @@ for (let i = 0; i < 15; i++) {
   locations.push(location);
 }
 
-const ga = new GA();
-ga.go();
+const drawPath = (from, to) => {
+  ctx.beginPath();
+  ctx.moveTo(from.x * 20, from.y * 20);
+  ctx.lineTo(to.x * 20, to.y * 20);
+  ctx.stroke();
+  ctx.closePath();
+};
+
+solve.onclick = () => {
+  const ga = new GA();
+  const solution = ga.go().pop();
+  reset();
+  for (let i = 1; i < solution.genes.length; i++) {
+    drawPath(solution.genes[i - 1], solution.genes[i]);
+  }
+};
