@@ -1,17 +1,20 @@
 class GA {
   constructor(
-    crossoverRate = 0.8,
-    mutationRate = 0.8,
-    populationSize = 1000,
-    generationSize = 1000,
+    pool,
+    depot,
+    crossoverRate = 0,
+    mutationRate = 0,
+    populationSize = 1,
+    generationSize = 0,
     elitism = true
   ) {
-    this.elitism = elitism;
     this.mutationRate = mutationRate;
     this.crossoverRate = crossoverRate;
     this.populationSize = populationSize;
     this.generationSize = generationSize;
-    this.chromosomeSize = locations.length + 1;
+    this.pool = pool;
+    this.depot = depot;
+    this.elitism = elitism;
     this.currentGeneration = [];
     this.nextGeneration = [];
   }
@@ -29,7 +32,7 @@ class GA {
 
   createPopulation() {
     for (let i = 0; i < this.populationSize; i++) {
-      const c = new Chromosome(this.chromosomeSize);
+      const c = new Chromosome(this.pool, this.depot, this.mutationRate);
       this.currentGeneration.push(c);
     }
   }
@@ -60,6 +63,7 @@ class GA {
       }
       child1.mutate();
       child2.mutate();
+
       this.nextGeneration.push(child1);
       this.nextGeneration.push(child2);
     }

@@ -6,15 +6,16 @@ class Location {
     this.depot = depot;
   }
 
-  createLocation() {
+  createLocation(color = "white") {
     // Canvas Location
     let radius = this.depot ? 7 : 5;
 
     ctx.beginPath();
-    ctx.fillStyle = this.depot ? "black" : "white";
+    ctx.fillStyle = this.depot ? "black" : color;
     ctx.arc(this.x * 20, this.y * 20, radius, 0, 2 * Math.PI);
     ctx.fill();
-    ctx.stroke();
+    ctx.strokeStyle = "#000";
+    if (color === "white") ctx.stroke();
 
     // DOM Location
     const location = document.createElement("div");
