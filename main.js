@@ -73,7 +73,7 @@ const removeLocation = (e) => {
 
 // Generate Locations
 let init = true;
-for (let i = 0; i < 200; i++) {
+for (let i = 0; i < 20; i++) {
   const location = new Location(
     Math.floor(Math.random() * 40),
     Math.floor(Math.random() * 20),
@@ -92,14 +92,24 @@ for (let i = 0; i < 200; i++) {
   locationElements.prepend(location.createLocation());
   locations.push(location);
 }
-// Draw routes
-const drawPath = (from, to, color) => {
-  ctx.beginPath();
-  ctx.moveTo(from.x * 20, from.y * 20);
-  ctx.lineTo(to.x * 20, to.y * 20);
-  ctx.strokeStyle = color;
-  ctx.stroke();
-  ctx.closePath();
+// Draw route
+const drawRoute = (coSolutions) => {
+  for (let i = 0; i < coSolutions.length; i++) {
+    const solution = coSolutions[i].genes;
+    const color = colors[i % colors.length];
+    for (let j = 1; j < solution.length; j++) {
+      const from = solution[j - 1];
+      const to = solution[j];
+      solution[0].createLocation(color);
+      to.createLocation(color);
+      ctx.beginPath();
+      ctx.moveTo(from.x * 20, from.y * 20);
+      ctx.lineTo(to.x * 20, to.y * 20);
+      ctx.strokeStyle = color;
+      ctx.stroke();
+      ctx.closePath();
+    }
+  }
 };
 // Some colors for multiple vehicles
 const colors = [
@@ -140,16 +150,17 @@ solve.addEventListener("click", () => {
       pool = locationsNoDepot.slice(range * i);
     }
     ga = new GA(pool, depot, 1, 1, 1000, 100);
-    solutions.push(ga.go().pop());
+    solutions.push(ga.go());
   }
   // Draw routes
-  reset();
-  for (let i = 0; i < solutions.length; i++) {
-    const solution = solutions[i].genes;
-    for (let j = 1; j < solutions[i].genes.length; j++) {
-      if (j === 1) solution[j - 1].createLocation(colors[i % colors.length]);
-      solution[j].createLocation(colors[i % colors.length]);
-      drawPath(solution[j - 1], solution[j], colors[i % colors.length]);
+  for (let i = 0; i < solutions[0].length; i++) {
+    let coSolutions = [];
+    for (let j = 0; j < solutions.length; j++) {
+      coSolutions.push(solutions[j][i]);
     }
+    setTimeout(() => {
+      reset();
+      drawRoute(coSolutions);
+    }, 1);
   }
 });
