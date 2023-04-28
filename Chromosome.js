@@ -1,19 +1,20 @@
 class Chromosome {
-  constructor(length = 0, createGenes = true, genes = [], mutationRate = 0) {
+  constructor(pool = [], depot, mutationRate = 0, genes = []) {
+    this.pool = pool;
+    this.depot = depot;
     this.genes = genes;
-    this.length = genes.length || length;
+    this.length = genes.length || pool.length;
     this.mutationRate = mutationRate;
     this.fitness = 0;
-    if (createGenes) this.createGenes();
+    if (!genes.length) this.createGenes();
   }
 
   createGenes() {
-    const depot = locations.find((location) => location.depot);
-    this.genes.push(depot);
-    for (let i = 1; i < this.length - 1; i++) {
-      const randomLocation = Math.floor(Math.random() * (this.length - 1));
+    this.genes.push(this.depot);
+    for (let i = 0; i < this.length; i++) {
+      const randomLocation = Math.floor(Math.random() * this.length);
       const existing = this.genes.find(
-        (gene) => gene.id === locations[randomLocation].id
+        (gene) => gene.id === this.pool[randomLocation].id
       );
 
       // Remove duplicated genes
@@ -21,9 +22,10 @@ class Chromosome {
         i--;
         continue;
       }
-      this.genes.push(locations[randomLocation]);
+      this.genes.push(this.pool[randomLocation]);
     }
-    this.genes.push(depot);
+    this.genes.push(this.depot);
+    this.length = this.genes.length;
   }
 
   calcFitness() {
@@ -57,15 +59,15 @@ class Chromosome {
       if (offSpr2Genes.length >= offSpr1Genes.length) break;
     }
 
-    let offspring1 = new Chromosome(undefined, false, [
-      this.genes[0],
+    let offspring1 = new Chromosome(undefined, this.depot, this.mutationRate, [
+      this.depot,
       ...offSpr1Genes,
-      this.genes[0],
+      this.depot,
     ]);
-    let offspring2 = new Chromosome(undefined, false, [
-      this.genes[0],
+    let offspring2 = new Chromosome(undefined, this.depot, this.mutationRate, [
+      this.depot,
       ...offSpr2Genes,
-      this.genes[0],
+      this.depot,
     ]);
 
     return { offspring1, offspring2 };
@@ -74,7 +76,7 @@ class Chromosome {
   mutate() {
     for (let i = 1; i < this.length - 1; i++) {
       if (Math.random() < this.mutationRate) {
-        let random = Math.floor(Math.random() * this.length - 1);
+        let random = Math.floor(Math.random() * (this.length - 1));
         if (random === 0) random++;
         [this.genes[random], this.genes[i]] = [
           this.genes[i],
